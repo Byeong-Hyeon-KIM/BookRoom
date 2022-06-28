@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+#main {
+	margin: 0 auto;
+	/* //padding: 20px; */
+	width: 1000px;
+}
+#bookTable {
+	margin: 30px auto;
+	margin-bottom: 10px;
+	width: 100%;
+	text-align: center;
+}
+#bookTable th {
+	border-bottom: 2px dashed black;
+	padding: 20px;
+	
+}
+#bookTable td {
+	padding: 15px;
+	height: 180px;
+}
+#postnPay{ display: flex; width: 100%}
+#postSearch {
+	display: inline-block; 
+	margin: 20px; 
+	font-size: 21px;
+	width: 40%;
+}
+#postSearch * {
+	font-size: 20px;
+	margin: 5px;
+}
+#postcode, #postSearch [type=button] {
+	font-size: 16px;
+}
+#postcode {
+	width: 140px;
+}
+#address, #extraAddress, #detailAddress { width: 300px;}
+#postcode, #address, #extraAddress {background-color: #ddd;}
+#pay{
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+}
+#pay * {
+	margin: 30px 0 10px 0;
+}
+#totalPrice {
+	display: inline-block;
+	font-size: 25px;
+	font-weight: bold;
+}
+#payBtn {
+	padding: 15px 0;
+	border-radius: 20px;
+	border: none;
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+	background-color: rgba(194, 222, 209);
+}
+#payBtn:hover {
+	background-color: rgba(176, 212, 190);
+}

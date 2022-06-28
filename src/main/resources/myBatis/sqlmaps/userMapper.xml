@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+    <!-- 로그인시 유저 데이터 INSERT -->
+    <insert id="UserInsert" >
+    	MERGE INTO USER_TB ut
+    		USING (
+    			SELECT 
+    				#{userid} AS pk_column, 
+    				#{username} AS USER_NAME,
+						#{email} AS EMAIL, 
+						#{mobile} AS MOBILE, 
+						#{gender} AS GENDER, 
+						#{age} AS AGE, 
+						#{birthyear} BIRTHYEAR
+					FROM dual
+    		) dummy
+    		ON (ut.USER_ID = dummy.pk_column) 
+    	WHEN NOT MATCHED THEN
+    		INSERT(
+    			USER_ID,
+    			USER_NAME,
+    			EMAIL,
+    			MOBILE,
+    			GENDER,
+    			AGE,
+    			BIRTHYEAR
+    		) VALUES(
+    			dummy.pk_column,
+    			dummy.USER_NAME,
+    			dummy.EMAIL,
+    			dummy.MOBILE,
+    			dummy.GENDER,
+    			dummy.AGE,
+    			dummy.BIRTHYEAR
+    		)
+    </insert>
+    
+    <!-- 유저 조회 -->
+    <select id="UserSelect" resultType="com.bookroom.cart.vo.CartVo">
+	    SELECT ISBN, QUANTITY
+			FROM CART_TB
+			WHERE USER_ID=#{user_id}
+    </select>
+    
+    <delete id="deleteCart">
+   		DELETE FROM CART_TB
+    	WHERE USER_ID = #{userid} 
+     	AND ISBN = #{isbn}  
+  	</delete>
+  	
+  	<delete id="deleteCartAll">
+  		DELETE FROM CART_TB
+    	WHERE USER_ID = #{userid} 
+  	</delete>
+</mapper>

@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+#main {
+	margin: 0 auto;
+	padding: 20px;
+	width: 1000px;
+}
+
+#optionForm {
+	float: right;
+}
+
+#optionForm select {font-size: 16px;}
+
+#bookListBody {
+	margin: 60px 20px 20px 20px;
+}
+#bookList { 
+	list-style: none;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+#bookList li{margin: 15px 0 15px 0;}
+.book {
+	display: flex;
+	width: 420px;
+	height: 180px;
+	/* border: 1px solid black; */
+	border-radius: 10px;
+}
+.book p{margin: 3px;}
+.book_img{padding-right: 7px;}
+.book_name{font-size: 18px; font-weight: 550;}
+.book_name:hover {text-decoration: underline;}
+.book_auth, .book_pub{color:#8E8E8E;}
+.book_price{font-size: 19px; font-weight: 700;}

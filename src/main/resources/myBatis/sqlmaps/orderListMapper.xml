@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OrderList">
+    <select id="GetOrderList" 
+    resultType="com.bookroom.mypage.vo.MypageVo">
+		SELECT    ORDERLIST_TB.*, 
+		          ORDER_TB.ORDER_DATE,
+		          ORDER_TB.PAYMENT,
+		          ORDER_TB.USER_ID 
+        FROM      ORDERLIST_TB 
+        LEFT JOIN ORDER_TB 
+        ON        ORDER_TB.ORDER_ID = ORDERLIST_TB.ORDER_ID 
+        WHERE     ORDER_TB.USER_ID = #{userid}
+    </select>
+    
+    <select id="getOrderListByPeriod"
+      resultType="com.bookroom.mypage.vo.MypageVo">
+      SELECT ORDERLIST_TB.*, 
+		     ORDER_TB.ORDER_DATE,
+		     ORDER_TB.PAYMENT,
+		     ORDER_TB.USER_ID 
+        FROM ORDERLIST_TB 
+        LEFT JOIN ORDER_TB 
+        ON        ORDER_TB.ORDER_ID = ORDERLIST_TB.ORDER_ID 
+        WHERE     ORDER_TB.USER_ID = #{userid} 
+          AND ORDER_TB.ORDER_DATE &gt;= #{start_date} 
+          AND ORDER_TB.ORDER_DATE &lt;= #{end_date} 
+    </select>
+    
+    <insert id="InsertCart">
+    	INSERT INTO CART_TB 
+    	VALUES(#{userid}, #{isbn}, #{quantity})
+    </insert>
+    
+    <insert id="insertOrder">
+    	BEGIN
+	    	INSERT INTO ORDER_TB 
+	    	VALUES
+	    	(
+	    		(SELECT NVL(MAX(ORDER_ID), 0) + 1 FROM ORDER_TB), 
+	    		#{userid},
+	    		#{zipcode},
+	    		#{address},
+	    		#{payment},
+	    		SYSDATE
+	    	);
+	    	
+	    	INSERT INTO ORDERLIST_TB 
+	    	VALUES
+	    	(
+	    		(SELECT NVL(MAX(ORDER_ID), 0) FROM ORDER_TB),
+	    		#{isbn},
+	    		#{quantity}
+	    	);
+	    END;
+    </insert>
+    
+    <insert id="insertOrder2">
+    	INSERT INTO ORDER_TB 
+    	VALUES
+    	(
+    		(SELECT NVL(MAX(ORDER_ID), 0) + 1 FROM ORDER_TB), 
+    		#{userid},
+    		#{zipcode},
+    		#{address},
+    		#{payment},
+    		SYSDATE
+    	)
+    </insert>
+    
+    <insert id="insertOrderList">
+    	INSERT INTO ORDERLIST_TB 
+    	VALUES
+    	(
+    		(SELECT NVL(MAX(ORDER_ID), 0) FROM ORDER_TB),
+    		#{isbn},
+    		#{quantity}
+    	)
+    </insert>
+</mapper>
